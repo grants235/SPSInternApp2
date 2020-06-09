@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GbayApiWebApplicationV2.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,5 +15,7 @@ namespace GbayApiWebApplicationV2.Data
            : base(options)
         {
         }
+
+        public DbSet<ApplicationUser> user { get; set; }
     }
 }

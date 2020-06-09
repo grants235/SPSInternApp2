@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using GbayApiWebApplicationV2.Data;
+using GbayApiWebApplicationV2.Models;
 
 namespace GbayApiWebApplicationV2
 {
@@ -32,7 +33,7 @@ namespace GbayApiWebApplicationV2
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseInMemoryDatabase(databaseName: "GbayWebApplication"));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 3;
@@ -40,10 +41,11 @@ namespace GbayApiWebApplicationV2
             })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -70,11 +72,13 @@ namespace GbayApiWebApplicationV2
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            IdentityUser admin = new IdentityUser
+            ApplicationUser admin = new ApplicationUser
             {
                 UserName = "Administrator",
                 Email = "admin@admin.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                SecurityQuestion1 = "a",
+                SecurityQuestion2 = "a"
             };
             await userManager.CreateAsync(admin, "P@ssword1");
         }

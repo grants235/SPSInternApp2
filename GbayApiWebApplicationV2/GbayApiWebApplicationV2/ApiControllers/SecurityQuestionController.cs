@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security;
 using System.Threading.Tasks;
 using GbayApiWebApplicationV2.Models;
 using GbayApiWebApplicationV2.ViewModels;
@@ -13,38 +12,61 @@ using Microsoft.AspNetCore.Mvc;
 namespace GbayApiWebApplicationV2.ApiControllers
 {
     [Route("api/[controller]")]
-    public class LoginController : ControllerBase
+    public class SecurityQuestionController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public LoginController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public SecurityQuestionController(UserManager<ApplicationUser> userManager)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
+        }
+
+        // GET: api/<controller>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
+
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
         }
 
         // POST api/<controller>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] LoginViewModel model)
+        public async Task<ActionResult> Post([FromBody]LoginViewModel model)
         {
             if (string.IsNullOrWhiteSpace(model.Username) || string.IsNullOrWhiteSpace(model.Email))
             {
                 return new UnauthorizedResult();
             }
-            
+
             ApplicationUser user = await userManager.FindByNameAsync(model.Username);
-            
+
             if (user != null)
             {
-                if (user.Email == model.Email)
+                if (user.Email == model.Email && user.SecurityQuestion1 == model.SecurityQuestion1 && user.SecurityQuestion2 == model.SecurityQuestion2)
                 {
                     return new OkResult();
                 }
             }
-            
-            return new UnauthorizedResult();
 
+            return new UnauthorizedResult();
+        }
+
+        // PUT api/<controller>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE api/<controller>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }
