@@ -3,30 +3,24 @@
 
 // Write your JavaScript code.
 document.getElementById("loginsubmit").addEventListener("click", e => {
+    document.getElementById('loginStatus').innertext = " ";
     var username = document.getElementById("username").value;
     var email = document.getElementById("email").value;
-    data = { 'username': username, 'email': email };
-    myFetch('/api/v1/Login', 'POST', false, data)
+    var data = { 'username': username, 'email': email };
+    var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+    fetch('/api/Login', requestInfo)
         .then(response => {
-            if (!response.ok) {
-                throw new Error(response.status);
-                //return response.json();
+            if (response.ok) {
+
+                document.getElementById('loginsubmit').classList.add('d-none');
+                document.getElementById('confirmTwoFactorButton').classList.remove('d-none');
+                document.getElementById('loginUsernameEmailContainer').classList.add('d-none');
+                document.getElementById('loginTwoFactorFormGroup').classList.remove('d-none');
+
+            }
+            else {
+                document.getElementById('loginStatus').innerText = "Login Failed";
             }
         })
-        .then(data => {
-            //sessionStorage.setItem('jwt', data.token);            
-            //document.location.href = '/';
-            //isLoggedIn();
-            //$('#modalLogin').modal('hide');
-            document.getElementById('loginButton').classList.add('d-none');
-            document.getElementById('confirmTwoFactorButton').classList.remove('d-none');
-            document.getElementById('loginUsernamePasswordContainer').classList.add('d-none');
-            document.getElementById('loginTwoFactorFormGroup').classList.remove('d-none');
-            enableLoginSpinner(false);
-        })
-        .catch(error => {
-            console.log(error);
-            document.getElementById('loginStatus').innerText = "Login Failed";
-            enableLoginSpinner(false);
-        });
+        
 });
