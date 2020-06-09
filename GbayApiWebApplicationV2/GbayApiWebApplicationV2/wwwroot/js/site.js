@@ -67,3 +67,30 @@ document.getElementById('confirmTwoFactorButton').addEventListener("click", e =>
         })
 
 });
+
+document.getElementById('PasswordSubmitButton').addEventListener("click", e => {
+
+    document.getElementById('loginStatus').innertext = " ";
+    var username = document.getElementById("username").value;
+    var email = document.getElementById("email").value;
+    var SecurityQuestion1 = document.getElementById('SecurityQuestion1').value;
+    var SecurityQuestion2 = document.getElementById('SecurityQuestion2').value;
+    var Password = document.getElementById('passwordentry').value;
+    var data = { 'username': username, 'email': email, 'SecurityQuestion1': SecurityQuestion1, "SecurityQuestion2": SecurityQuestion2, "Password":Password };
+    var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+    fetch('/api/SecurityQuestion', requestInfo)
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('loginStatus').classList.remove('text-danger');
+
+                document.getElementById('loginStatus').innerText = "Login Suscessful";
+                document.getElementById('LoginPasswordFormGroup').classList.add('d-none');
+                document.getElementById('PasswordSubmitButton').classList.add('d-none');
+                document.getElementById('modalClose').classList.remove('d-none');
+            }
+            else {
+                document.getElementById('loginStatus').innerText = "Login Failed";
+            }
+        })
+
+});

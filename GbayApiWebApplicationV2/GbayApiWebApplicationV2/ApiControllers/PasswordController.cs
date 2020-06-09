@@ -12,15 +12,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace GbayApiWebApplicationV2.ApiControllers
 {
     [Route("api/[controller]")]
-    public class SecurityQuestionController : ControllerBase
+    public class PasswordController : Controller
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
-        public SecurityQuestionController(UserManager<ApplicationUser> userManager)
+        public PasswordController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
         }
-       
+
         // POST api/<controller>
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]LoginViewModel model)
@@ -36,11 +38,17 @@ namespace GbayApiWebApplicationV2.ApiControllers
             {
                 if (user.Email == model.Email && user.SecurityQuestion1 == model.SecurityQuestion1 && user.SecurityQuestion2 == model.SecurityQuestion2)
                 {
-                    return new OkResult();
+                    var result = await userManager.CheckPasswordAsync(user, model.Password);
+                    if (result == true)
+                    {
+                        await signInManager.SignInAsync(user, false);
+                        return new OkResult();
+                    }
                 }
             }
 
             return new UnauthorizedResult();
         }
+
     }
 }
