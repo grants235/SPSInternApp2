@@ -2,6 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+
 document.getElementById('loginNextStep1').addEventListener("click", e => {
     document.getElementById('loginStatus').innertext = " ";
     var username = document.getElementById("username").value;
@@ -78,19 +80,32 @@ document.getElementById('PasswordSubmitButton').addEventListener("click", e => {
     var Password = document.getElementById('passwordentry').value;
     var data = { 'username': username, 'email': email, 'SecurityQuestion1': SecurityQuestion1, "SecurityQuestion2": SecurityQuestion2, "Password":Password };
     var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
-    fetch('/api/SecurityQuestion', requestInfo)
+    fetch('/api/Password', requestInfo)
         .then(response => {
             if (response.ok) {
                 document.getElementById('loginStatus').classList.remove('text-danger');
-
                 document.getElementById('loginStatus').innerText = "Login Suscessful";
                 document.getElementById('LoginPasswordFormGroup').classList.add('d-none');
                 document.getElementById('PasswordSubmitButton').classList.add('d-none');
                 document.getElementById('modalClose').classList.remove('d-none');
+                return response.json();
             }
             else {
                 document.getElementById('loginStatus').innerText = "Login Failed";
             }
         })
+        .then(data => {
+            sessionStorage.setItem('jwt', data.token);
+            var jwt = sessionStorage.getItem('jwt');
+            if (jwt != null && jwt != " ") {
+                var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+                fetch('/api/AuthorizeCheck', requestInfo)
+                    .then(response => {
+                        if (response.ok) {
+                            document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
+                        }
+                    });
+            }
+        });
 
 });
