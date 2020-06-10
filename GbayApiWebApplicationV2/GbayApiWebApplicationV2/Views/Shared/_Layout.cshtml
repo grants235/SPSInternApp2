@@ -6,6 +6,27 @@
     <title>@ViewData["Title"] - GbayApiWebApplicationV2</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script>
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/AuthorizeCheck', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('LoginNavLink').classList.add('d-none');
+                        document.getElementById('RegisterNavLink').classList.add('d-none');
+                        document.getElementById('MyAccountNavLink').classList.remove('d-none');
+                        document.getElementById('LogoutNavLink').classList.remove('d-none');
+                        document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
+                    } else {
+                        document.getElementById('LoginNavLink').classList.remove('d-none');
+                        document.getElementById('RegisterNavLink').classList.remove('d-none');
+                        document.getElementById('MyAccountNavLink').classList.add('d-none');
+                        document.getElementById('LogoutNavLink').classList.add('d-none');
+                    }
+                });
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -17,17 +38,32 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav ml-0">
+                        <li class="nav-item" id="LoginNavLink">
+                            <a class="nav-link text-dark" data-toggle="modal" data-target="#LoginModal" style="cursor:pointer;">
+                                Login
+                            </a>
+                        </li>
+                        <li class="nav-item" id="RegisterNavLink">
+                            <a class="nav-link text-dark" data-toggle="modal" data-target="#RegisterModal" style="cursor:pointer;">
+                                Register
+                            </a>
+                        </li>
+                        <li class="nav-item" id="MyAccountNavLink">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">My Account</a>
+                        </li>
+                        <li class="nav-item" id="LogoutNavLink">
+                            <a class="nav-link text-dark" data-toggle="modal" data-target="#LogoutModal" style="cursor:pointer;">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1 ml-0">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a  class="nav-link text-dark" data-toggle="modal" data-target="#exampleModal" style="cursor:pointer;">
-                                Login
-                            </a>
                         </li>
                     </ul>
                 </div>
@@ -47,7 +83,7 @@
     </footer>
 
     <!--Modals-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

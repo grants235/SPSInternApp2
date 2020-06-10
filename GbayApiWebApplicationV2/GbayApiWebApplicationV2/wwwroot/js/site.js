@@ -96,16 +96,7 @@ document.getElementById('PasswordSubmitButton').addEventListener("click", e => {
         })
         .then(data => {
             sessionStorage.setItem('jwt', data.token);
-            var jwt = sessionStorage.getItem('jwt');
-            if (jwt != null && jwt != " ") {
-                var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
-                fetch('/api/AuthorizeCheck', requestInfo)
-                    .then(response => {
-                        if (response.ok) {
-                            document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
-                        }
-                    });
-            }
+            document.location = '/';
         });
 
 });
