@@ -100,3 +100,8 @@ document.getElementById('PasswordSubmitButton').addEventListener("click", e => {
         });
 
 });
+
+document.getElementById('LogoutButton').addEventListener("click", e => {
+    sessionStorage.removeItem('jwt');
+    document.location = '/';
+});
