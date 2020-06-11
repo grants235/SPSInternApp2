@@ -99,6 +99,14 @@ namespace GbayApiWebApplicationV2
                 SecurityQuestion2 = "a"
             };
             await userManager.CreateAsync(admin, "P@ssword1");
+
+            ApplicationUser partial = new ApplicationUser
+            {
+                UserName = "Grants235",
+                Email = "grantshanklin@gmail.com",
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(partial, "P@ssword1");
         }
     }
 }

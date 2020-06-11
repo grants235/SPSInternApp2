@@ -109,6 +109,18 @@
                             <input type="text" class="form-control" placeholder="Security Question 2" id="SecurityQuestion2" />
                         </div>
                     </div>
+
+                    <div class="d-none" id="loginSetupSecondStepFormGroup">
+                        <h4>Setup Security Questions</h4>
+                        <div class="form-group">
+                            <label for="SecurityQuestion1">What is your childhood nickname:</label>
+                            <input type="text" class="form-control" placeholder="Security Question 1" id="SetupSecurityQuestion1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="SecurityQuestion2">What is the town you were born in:</label>
+                            <input type="text" class="form-control" placeholder="Security Question 2" id="SetupSecurityQuestion2" />
+                        </div>
+                    </div>
                     <div class="d-none" id="LoginPasswordFormGroup">
                         <div class="form-group">
                             <label for="password">Password:</label>
@@ -121,6 +133,7 @@
                     <button type="button" class="btn btn-secondary d-none" id="modalBack">Back</button>
                     <button class="btn-primary btn" id="loginNextStep1" type="submit">Next</button>
                     <button class="d-none btn-primary btn" id="confirmTwoFactorButton" type="submit">Next</button>
+                    <button class="d-none btn-primary btn" id="SetupSecondStep" type="submit">Submit</button>
                     <button class="d-none btn-primary btn" id="PasswordSubmitButton" type="submit">Submit</button>
                     <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalClose">Close</button>
                 </div>
@@ -144,6 +157,56 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancel">Cancel</button>
                     <button type="button" class="btn btn-danger" id="LogoutButton">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Register Modal-->
+    <div class="modal fade" id="RegisterModal" tabindex="-1" role="dialog" aria-labelledby="RegisterModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="text-danger" id="RegisterStatus"></span>
+                    <div id="RegisterFormGroup">
+                        <div class="form-group">
+                            <label for="username">Username: </label>
+                            <input type="text" class="form-control" placeholder="Enter your Username" id="CreateUsername" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email: </label>
+                            <input type="email" class="form-control" placeholder="Enter your Email" id="CreateEmail" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input type="password" class="form-control" placeholder="Enter your Password" id="CreatePassword" />
+                            <small>
+                                Your password must contain:
+                                <br />- 8 digits
+                                <br />- At least 1 letter
+                                <br />- At least 1 number
+                                <br />- At least 1 special character
+                            </small>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmpasssword">Confirm Password: </label>
+                            <input type="password" class="form-control" placeholder="Confirm your Password" id="CreateConfirmPassword" />
+                        </div>
+                    </div>
+                    <div class="d-none" id="RegisterEmailConfirmation">
+                        <h5>Thank you for registering. Before you can login, please confirm your email by clicking on the link that was sent to you via email</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancelRegistration">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="RegisterSubmit">Register</button>
+                    <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalCloseRegistration">Close</button>
                 </div>
             </div>
         </div>

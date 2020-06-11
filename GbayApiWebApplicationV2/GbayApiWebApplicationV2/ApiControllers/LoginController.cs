@@ -39,7 +39,14 @@ namespace GbayApiWebApplicationV2.ApiControllers
             {
                 if (user.Email == model.Email)
                 {
-                    return new OkResult();
+                    if (user.SecurityQuestion1 != null && user.SecurityQuestion2 != null)
+                    {
+                        return new OkResult();
+                    }
+                    else
+                    {
+                        return new NoContentResult();
+                    }
                 }
             }
             

@@ -43,12 +43,21 @@ namespace GbayApiWebApplicationV2.ApiControllers
 
             if (user != null)
             {
-                if (user.Email == model.Email && user.SecurityQuestion1 == model.SecurityQuestion1 && user.SecurityQuestion2 == model.SecurityQuestion2)
+
+                if (model.SecurityQuestion1 == "" && user.SecurityQuestion1 == null && model.SecurityQuestion2 == "" && user.SecurityQuestion2 == null)
                 {
                     var result = await userManager.CheckPasswordAsync(user, model.Password);
                     if (result == true)
                     {
-                        
+                        return new NoContentResult();
+                    }
+                }
+                else if (user.Email == model.Email && user.SecurityQuestion1 == model.SecurityQuestion1 && user.SecurityQuestion2 == model.SecurityQuestion2)
+                {
+                    var result1 = await userManager.CheckPasswordAsync(user, model.Password);
+                    if (result1 == true)
+                    {
+
 
                         JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
                         SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["JwtKey"]));
@@ -68,10 +77,12 @@ namespace GbayApiWebApplicationV2.ApiControllers
                         return new OkObjectResult(responseModel);
                     }
                 }
+                
             }
 
             return new UnauthorizedResult();
         }
 
     }
+
 }
