@@ -1,8 +1,66 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<ApplicationUser> signInManager;
+
+@model IEnumerable<Product>
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4" id="WelcomeTitle">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div>
+    @foreach (var item in Model)
+    {
+        var modalName = "#ProductModal" + item.Id.ToString();
+        var modalName2 = "ProductModal" + item.Id.ToString();
+        <a data-toggle="modal" data-target="@modalName" style="text-decoration:none; color:blue; cursor:pointer;">
+            <div class="card" style="width: 15rem; height:29rem; display:inline-grid; margin: 15px; text-align:center;">
+                <img src="@Url.Content(item.ImgUrl)" class="card-img-top" />
+                <div class="card-body">
+                    <h4 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                    <h5> $@Html.DisplayFor(modelItem => item.Price)</h5>
+                    <form method="post" asp-action="AddToShoppingCart" asp-controller="ShoppingCart" asp-route-id="@item.Id">
+                        <button class="btn btn-primary" style="margin: 10px;" type="submit" >
+                            Add to Cart
+                        </button>
+                    </form>
+                    <br />
+                    <p>Published by: @Html.DisplayFor(modelItem => item.Seller)</p>
+                </div>
+            </div>
+        </a>
+
+        <!--Product Modal-->
+        <div class="modal fade" id="@modalName2" tabindex="-1" role="dialog" aria-labelledby="ProductModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Product Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <img class="d-block w-50 float-left" style="padding-right:15px;" src="@Url.Content(item.ImgUrl)" />
+                        <h4 class="d-block">@Html.DisplayFor(modelItem => item.ProductName)</h4>
+                        <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                        <h6>$@Html.DisplayFor(modelItem => item.Price)</h6>
+                        <small>
+                            Published by: @Html.DisplayFor(modelItem => item.Seller)
+                            <br />Product ID: @Html.DisplayFor(modelItem => item.Id)
+                        </small>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                        <button type="button" class="btn btn-primary" id="AddToCart">Add to Cart</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

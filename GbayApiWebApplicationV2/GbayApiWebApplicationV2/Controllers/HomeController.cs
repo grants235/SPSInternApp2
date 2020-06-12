@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using GbayApiWebApplicationV2.Models;
 using Microsoft.AspNetCore.Identity;
+using GbayApiWebApplicationV2.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GbayApiWebApplicationV2.Controllers
 {
@@ -14,18 +16,20 @@ namespace GbayApiWebApplicationV2.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext context;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
             _logger = logger;
             this.userManager = userManager;
+            this.context = context;
         }
 
-        public IActionResult Index(string userId, string token)
+        public async Task<IActionResult> IndexAsync(string userId, string token)
         {
             ViewBag.UserId = userId;
             ViewBag.Token = token;
-            return View();
+            return View(await context.Products.ToListAsync());
         }
 
         public IActionResult Privacy()
