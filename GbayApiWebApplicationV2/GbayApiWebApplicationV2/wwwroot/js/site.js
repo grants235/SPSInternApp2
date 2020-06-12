@@ -38,7 +38,7 @@ document.getElementById('loginNextStep1').addEventListener("click", e => {
                 document.getElementById('loginStatus').innerText = "Login Failed";
             }
         })
-        
+
 });
 
 document.getElementById('modalBack').addEventListener("click", e => {
@@ -59,7 +59,7 @@ document.getElementById('confirmTwoFactorButton').addEventListener("click", e =>
     var email = document.getElementById("email").value;
     var SecurityQuestion1 = document.getElementById('SecurityQuestion1').value;
     var SecurityQuestion2 = document.getElementById('SecurityQuestion2').value;
-    var data = { 'username': username, 'email': email, 'SecurityQuestion1':SecurityQuestion1, "SecurityQuestion2":SecurityQuestion2};
+    var data = { 'username': username, 'email': email, 'SecurityQuestion1': SecurityQuestion1, "SecurityQuestion2": SecurityQuestion2 };
     var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
     fetch('/api/SecurityQuestion', requestInfo)
         .then(response => {
@@ -88,7 +88,7 @@ document.getElementById('PasswordSubmitButton').addEventListener("click", e => {
     var SecurityQuestion1 = document.getElementById('SecurityQuestion1').value;
     var SecurityQuestion2 = document.getElementById('SecurityQuestion2').value;
     var Password = document.getElementById('passwordentry').value;
-    var data = { 'username': username, 'email': email, 'SecurityQuestion1': SecurityQuestion1, "SecurityQuestion2": SecurityQuestion2, "Password":Password };
+    var data = { 'username': username, 'email': email, 'SecurityQuestion1': SecurityQuestion1, "SecurityQuestion2": SecurityQuestion2, "Password": Password };
     var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
     fetch('/api/Password', requestInfo)
         .then(response => {
@@ -155,7 +155,7 @@ document.getElementById('RegisterSubmit').addEventListener("click", e => {
                 }
             });
     }
-    
+
 });
 
 
@@ -165,6 +165,14 @@ $(document).ready(function () {
         $('#LoginModal').modal('show');
     };
 });
+
+$(document).ready(function () {
+
+    if (window.location.href.indexOf('#ResetPasswordModal') != -1) {
+        $('#ResetPasswordModal').modal('show');
+    };
+});
+
 
 document.getElementById('SetupSecondStep').addEventListener("click", e => {
     var username = document.getElementById("username").value;
@@ -192,4 +200,48 @@ document.getElementById('SetupSecondStep').addEventListener("click", e => {
             sessionStorage.setItem('jwt', data.token);
             document.location = '/';
         });
+});
+
+document.getElementById('GoToForgotPasword').addEventListener("click", e => {
+    $('#LoginModal').modal('hide');
+    $('#ForgotPasswordModal').modal('show');
+});
+
+document.getElementById('ForgotPasswordSubmit').addEventListener("click", e => {
+    var email = document.getElementById('ForgotPasswordEmail').value;
+    var data = { 'email': email };
+    var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+    fetch('/api/ForgotPassword', requestInfo)
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('ForgotPaswordModalClose').classList.remove('d-none');
+                document.getElementById('ForgotPasswordOk').classList.remove('d-none');
+                document.getElementById('ForgotPasswordSubmit').classList.add('d-none');
+                document.getElementById('ForgotPasswordCancel').classList.add('d-none');
+                document.getElementById('ForgotPasswordFormGroup').classList.add('d-none');
+            }
+        });
+
+});
+
+document.getElementById('ResetPasswordSubmit').addEventListener("click", e => {
+    var userId = document.getElementById('userId').value;
+    var token = document.getElementById('token').value;
+    var password = document.getElementById('Password').value;
+    var confirmPassword = document.getElementById('ConfirmPassword').value;
+    if (password == confirmPassword) {
+        var data = { 'userId': userId, 'token': token, 'password': password, 'confirmPassword': confirmPassword };
+        var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+        fetch('/api/ResetPassword', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('loginStatus').innerText = "Password Reset Suscessful";
+                    document.location = '/#LoginModal';
+                } else {
+                    document.getElementById('ResetPasswordStatus').innerText = "Password Reset Failed";
+                }
+            });
+    } else {
+        document.getElementById('ResetPasswordStatus').innerText = "Passwords do not match";
+    }
 });

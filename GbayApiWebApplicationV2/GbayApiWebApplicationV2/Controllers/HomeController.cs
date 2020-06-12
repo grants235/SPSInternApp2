@@ -21,8 +21,10 @@ namespace GbayApiWebApplicationV2.Controllers
             this.userManager = userManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string userId, string token)
         {
+            ViewBag.UserId = userId;
+            ViewBag.Token = token;
             return View();
         }
 
@@ -59,6 +61,23 @@ namespace GbayApiWebApplicationV2.Controllers
                 return Redirect("/#LoginModal");
             }
             return View("Error");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> ForgotPassword(string userId, string token)
+        {
+            if (userId == null || token == null)
+            {
+                return View("Error");
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            return Redirect("/#ResetPasswordModal");
         }
     }
 }

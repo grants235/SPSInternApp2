@@ -126,6 +126,7 @@
                             <label for="password">Password:</label>
                             <input type="password" class="form-control" placeholder="Enter your Password" id="passwordentry" />
                         </div>
+                        <a id="GoToForgotPasword" style="text-decoration:underline; color:blue; cursor:pointer;">Forgot Password?</a>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -136,6 +137,68 @@
                     <button class="d-none btn-primary btn" id="SetupSecondStep" type="submit">Submit</button>
                     <button class="d-none btn-primary btn" id="PasswordSubmitButton" type="submit">Submit</button>
                     <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalClose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Forgot Password Modal-->
+    <div class="modal fade" id="ForgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ForgotPasswordModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="" id="ForgotPasswordFormGroup">
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" placeholder="Enter your Email" id="ForgotPasswordEmail" />
+                        </div>
+                    </div>
+                    <div class="d-none" id="ForgotPasswordOk">
+                        <h4>Suscess. You will recieve an email shortly with a link to reset your password</h4>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="ForgotPasswordCancel">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="ForgotPasswordSubmit">Submit</button>
+                    <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="ForgotPaswordModalClose">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--Reset Password Modal-->
+    <div class="modal fade" id="ResetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ResetPasswordModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <span class="text-danger" id="ResetPasswordStatus"></span>
+                    <div class="" id="ResetPasswordFormGroup">
+                        <input type="text" id="userId" value="@ViewBag.UserId" hidden />
+                        <input type="text" id="token" value="@ViewBag.Token" hidden />
+                        <div class="form-group">
+                            <label for="password">Password: </label>
+                            <input type="password" class="form-control" id="Password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmpassword">Confirm Password</label>
+                            <input type="password" class="form-control" id="ConfirmPassword" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="ResetPasswordSubmit">Submit</button>
                 </div>
             </div>
         </div>
