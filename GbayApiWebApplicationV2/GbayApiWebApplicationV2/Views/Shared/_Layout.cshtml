@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GbayApiWebApplicationV2</title>
+    <title>@ViewData["Title"] - Gbay Online Marketplace</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <script>
@@ -17,8 +17,12 @@
                         document.getElementById('RegisterNavLink').classList.add('d-none');
                         document.getElementById('MyAccountNavLink').classList.remove('d-none');
                         document.getElementById('LogoutNavLink').classList.remove('d-none');
+                        document.getElementById('CartNavLink').classList.remove('d-none');
                         document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
                     }
+                })
+                .then(data => {
+                    document.getElementById('WelcomeTitle').innerText = "Welcome, " + data.Username;
                 });
         }
     </script>
@@ -54,6 +58,11 @@
                                 Logout
                             </a>
                         </li>
+                        <li class="nav-item d-none" id="CartNavLink">
+                            <a class="btn btn-primary" onclick="openNav()" style="cursor:pointer; color:white;">
+                                Cart
+                            </a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav flex-grow-1 ml-0">
                         <li class="nav-item">
@@ -78,6 +87,118 @@
             &copy; 2020 - GbayApiWebApplicationV2 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!--Cart Modal-->
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            right: 0;
+            background-color: white;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+            .sidenav .closebtn {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+        .cartTitle {
+            padding-left: 40px;
+        }
+
+        .main {
+            padding: 0px 60px;
+        }
+    </style>
+
+    <script>
+        /* Set the width of the side navigation to 250px */
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "50%";
+            document.getElementById("mySidenav").style.marginTop = "60px";
+            document.getElementById("main").style.marginRight = "50%";
+        }
+
+        /* Set the width of the side navigation to 0 */
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+            document.getElementById("main").style.marginRight = "0"
+        }
+    </script>
+
+    <div id="mySidenav" class="sidenav">
+        @using Microsoft.AspNetCore.Identity;
+        @inject SignInManager<ApplicationUser> signInManager;
+
+        @model IEnumerable<Product>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <h1 class="cartTitle">Cart</h1>
+        <h3 class="cartTitle">You have 50 credits</h3>
+        <div class="main">
+            <div class="row checkoutForm">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width:50%">Product</th>
+                            <th style="width:10%">Price</th>
+                            <th style="width:10%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td data-th="Product">
+
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img src="@Url.Content(item.ImgUrl)" class="img-responsive" style="width:80px" /></div>
+                                        <div class="col-sm-10">
+                                            <h4 style="margin-left:5px;">@item.ProductName</h4>
+                                            <p>@item.Description</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price">@item.Price.ToString("c")</td>
+                                <td class="actions" data-th="">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-right">Total:</td>
+                            <td class="text-right">
+                                $100000
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+                <div class="text-right">
+                    <div class="btn-group ">
+                        <a href="javascript:void(0)" class="btn btn-primary" onclick="closeNav()">Continue Shopping</a>
+                        <form method="post">
+                            <button class="btn btn-success" asp-controller="Order" asp-action="Checkout">Check out</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
     <!--Login Modal-->
     <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -173,7 +294,7 @@
             </div>
         </div>
     </div>
-    
+
     <!--Reset Password Modal-->
     <div class="modal fade" id="ResetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="ResetPasswordModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -185,7 +306,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" id="ResetPasswordSubmit">Submit</button>
@@ -264,7 +385,7 @@
             </div>
         </div>
     </div>
-     
+
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
