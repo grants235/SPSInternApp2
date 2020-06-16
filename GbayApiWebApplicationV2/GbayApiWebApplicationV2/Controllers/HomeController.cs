@@ -9,6 +9,7 @@ using GbayApiWebApplicationV2.Models;
 using Microsoft.AspNetCore.Identity;
 using GbayApiWebApplicationV2.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GbayApiWebApplicationV2.Controllers
 {
@@ -82,6 +83,12 @@ namespace GbayApiWebApplicationV2.Controllers
             }
 
             return Redirect("/#ResetPasswordModal");
+        }
+
+        [HttpGet]
+        public IActionResult MyAccount()
+        {
+            return View();
         }
     }
 }

@@ -19,10 +19,14 @@
                         document.getElementById('LogoutNavLink').classList.remove('d-none');
                         document.getElementById('CartNavLink').classList.remove('d-none');
                         document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
+                        return response.json();
                     }
                 })
                 .then(data => {
-                    document.getElementById('WelcomeTitle').innerText = "Welcome, " + data.Username;
+                    document.getElementById('WelcomeTitle').innerText = "Welcome, " + data.username;
+                    if (data.role == "Administrators") {
+                        document.getElementById('ManageUsersLink').classList.remove('d-none');
+                    }
                 });
         }
     </script>
@@ -31,7 +35,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GbayApiWebApplicationV2</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">GBay Online Marketplace</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -49,7 +53,7 @@
                             </a>
                         </li>
                         <li class="nav-item d-none" id="MyAccountNavLink">
-                            <a class="nav-link text-dark" data-toggle="modal" data-target="#LogoutModal" style="cursor:pointer;">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="MyAccount">
                                 My Account
                             </a>
                         </li>
@@ -70,6 +74,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark d-none" asp-controller="Administration" asp-action="ManageUsers" id="ManageUsersLink">Manage Users</a>
                         </li>
                     </ul>
                 </div>
@@ -123,9 +130,8 @@
     <script>
         /* Set the width of the side navigation to 250px */
         function openNav() {
-            document.getElementById("mySidenav").style.width = "50%";
+            document.getElementById("mySidenav").style.width = "100%";
             document.getElementById("mySidenav").style.marginTop = "60px";
-            document.getElementById("main").style.marginRight = "50%";
         }
 
         /* Set the width of the side navigation to 0 */
@@ -136,10 +142,6 @@
     </script>
 
     <div id="mySidenav" class="sidenav">
-        @using Microsoft.AspNetCore.Identity;
-        @inject SignInManager<ApplicationUser> signInManager;
-
-        @model IEnumerable<Product>
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <h1 class="cartTitle">Cart</h1>
         <h3 class="cartTitle">You have 50 credits</h3>
@@ -154,25 +156,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model)
+                        <!--
+                        foreach (var item in Model)
                         {
                             <tr>
                                 <td data-th="Product">
 
                                     <div class="row">
-                                        <div class="col-sm-2 hidden-xs"><img src="@Url.Content(item.ImgUrl)" class="img-responsive" style="width:80px" /></div>
+                                        <div class="col-sm-2 hidden-xs"><img src=Url.Content(item.ImgUrl)" class="img-responsive" style="width:80px" /></div>
                                         <div class="col-sm-10">
-                                            <h4 style="margin-left:5px;">@item.ProductName</h4>
-                                            <p>@item.Description</p>
+                                            <h4 style="margin-left:5px;">item.ProductName</h4>
+                                            <p>item.Description</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td data-th="Price">@item.Price.ToString("c")</td>
+                                <td data-th="Price">item.Price.ToString("c")</td>
                                 <td class="actions" data-th="">
                                     <button class="btn btn-danger btn-sm">Delete</button>
                                 </td>
                             </tr>
                         }
+                            -->
                     </tbody>
                     <tfoot>
                         <tr>

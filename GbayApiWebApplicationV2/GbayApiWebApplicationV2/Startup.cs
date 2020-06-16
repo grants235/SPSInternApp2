@@ -63,7 +63,7 @@ namespace GbayApiWebApplicationV2
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -90,6 +90,18 @@ namespace GbayApiWebApplicationV2
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
+            IdentityRole adminRole = new IdentityRole
+            {
+                Name = "Administrators"
+            };
+            await roleManager.CreateAsync(adminRole);
+
+            IdentityRole userRole = new IdentityRole
+            {
+                Name = "Users"
+            };
+            await roleManager.CreateAsync(userRole);
+
             ApplicationUser admin = new ApplicationUser
             {
                 UserName = "Administrator",
@@ -99,6 +111,7 @@ namespace GbayApiWebApplicationV2
                 SecurityQuestion2 = "a"
             };
             await userManager.CreateAsync(admin, "P@ssword1");
+            await userManager.AddToRoleAsync(admin, "Administrators");
 
             ApplicationUser partial = new ApplicationUser
             {

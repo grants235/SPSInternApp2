@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "My Account";
+}
+
+
+
+<h1>My Account</h1>
+
+<table class="table" id="MyAccountTable">
+    <tr>
+        <th>Status</th>
+        <td>Logged In</td>
+        <td><a href="@Url.Action("Logout", "Account")">Logout</a></td>
+    </tr>
+    <tr>
+        <th>Number of Credits</th>
+        <td>50</td>
+        <td><a href="@Url.Action("CreditCatalog", "Account")">Buy More</a></td>
+    </tr>
+    <tr>
+        <th>Username</th>
+        <td id="MyAccountUsername">@User.Identity.Name</td>
+        <td><a href="@Url.Action("ResetUsername", "Account")">Reset Username</a></td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td id="MyAccountEmail"></td>
+        <td><a href="@Url.Action("ResetEmail", "Account")">Reset Email</a></td>
+    </tr>
+    <tr>
+        <th>Password</th>
+        <td>********</td>
+        <td><a href="@Url.Action("ForgotPassword", "Account")">Reset Password</a></td>
+    </tr>
+    <tr>
+        <th>Security Questions</th>
+        <td>*****  |  ******</td>
+        <td><a href="@Url.Action("ResetSecQuestions", "Account")">Reset Security Questions</a></td>
+    </tr>
+</table>
+
+

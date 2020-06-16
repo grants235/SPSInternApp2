@@ -245,3 +245,24 @@ document.getElementById('ResetPasswordSubmit').addEventListener("click", e => {
         document.getElementById('ResetPasswordStatus').innerText = "Passwords do not match";
     }
 });
+
+document.addEventListener("DOMContentLoaded", e => {
+    var jwt = sessionStorage.getItem('jwt');
+    if (jwt != null && jwt != " ") {
+        var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+        fetch('/api/MyAccount', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                document.getElementById('MyAccountUsername').innerText = data.username;
+                document.getElementById('MyAccountEmail').innerText = data.email;
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
+});
