@@ -96,11 +96,23 @@ namespace GbayApiWebApplicationV2
             };
             await roleManager.CreateAsync(adminRole);
 
-            IdentityRole userRole = new IdentityRole
+            IdentityRole buyerRole = new IdentityRole
             {
-                Name = "Users"
+                Name = "Buyers"
             };
-            await roleManager.CreateAsync(userRole);
+            await roleManager.CreateAsync(buyerRole);
+
+            IdentityRole sellerRole = new IdentityRole
+            {
+                Name = "Sellers"
+            };
+            await roleManager.CreateAsync(sellerRole);
+
+            IdentityRole moderatorRole = new IdentityRole
+            {
+                Name = "Moderators"
+            };
+            await roleManager.CreateAsync(moderatorRole);
 
             ApplicationUser admin = new ApplicationUser
             {

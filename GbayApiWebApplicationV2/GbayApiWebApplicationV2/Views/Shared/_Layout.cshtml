@@ -18,12 +18,10 @@
                         document.getElementById('MyAccountNavLink').classList.remove('d-none');
                         document.getElementById('LogoutNavLink').classList.remove('d-none');
                         document.getElementById('CartNavLink').classList.remove('d-none');
-                        document.getElementById('WelcomeTitle').innerText = "Welcome, you are logged in now";
                         return response.json();
                     }
                 })
                 .then(data => {
-                    document.getElementById('WelcomeTitle').innerText = "Welcome, " + data.username;
                     if (data.role == "Administrators") {
                         document.getElementById('ManageUsersLink').classList.remove('d-none');
                     }

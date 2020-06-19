@@ -266,3 +266,8 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
 });
+
+document.getElementById('EditUserModalOpenButton0').addEventListener("click", e => {
+    document.getElementById('EditUsername').nodeValue = "test";
+    $("EditUserModal").modal('show');
+});

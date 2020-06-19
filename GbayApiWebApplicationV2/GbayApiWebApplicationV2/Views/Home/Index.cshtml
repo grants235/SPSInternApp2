@@ -8,6 +8,27 @@
     ViewData["Title"] = "Home Page";
 }
 
+<script>
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/AuthorizeCheck', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('LoginNavLink').classList.add('d-none');
+                        document.getElementById('RegisterNavLink').classList.add('d-none');
+                        document.getElementById('MyAccountNavLink').classList.remove('d-none');
+                        document.getElementById('LogoutNavLink').classList.remove('d-none');
+                        document.getElementById('CartNavLink').classList.remove('d-none');
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('WelcomeTitle').innerText = "Welcome, " + data.username;
+                });
+        }
+</script>
+
 <div class="text-center">
     <h1 class="display-4" id="WelcomeTitle">Welcome</h1>
 </div>
@@ -24,7 +45,7 @@
                     <h4 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h4>
                     <h5> $@Html.DisplayFor(modelItem => item.Price)</h5>
                     <form method="post" asp-action="AddToShoppingCart" asp-controller="ShoppingCart" asp-route-id="@item.Id">
-                        <button class="btn btn-primary" style="margin: 10px;" type="submit" >
+                        <button class="btn btn-primary" style="margin: 10px;" type="submit">
                             Add to Cart
                         </button>
                     </form>

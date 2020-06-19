@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<script>
+    var jwt = sessionStorage.getItem('jwt');
+    if (jwt != null && jwt != " ") {
+        var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+        fetch('/api/ManageUsers', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+            })
+            .then(data => {
+                var x = 0;
+                var num = 0;
+                while (x == 0) {
+                    //var obj = data[i];
+                    var table = document.getElementById('ManageUsersTable').getElementsByTagName('tbody')[0];
+
+                    //var newCell = newRow.insertCell(0);
+                    //var newText = document.createTextNode(data[i].Username);
+                    //newCell.appendChild(newText);
+                    if (data[num].id != null) {
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        var cell3 = row.insertCell(2);
+                        var cell4 = row.insertCell(3);
+                        var cell5 = row.insertCell(4);
+                        var cell6 = row.insertCell(5);
+                        cell1.innerText = data[num].id;
+                        cell2.innerText = data[num].username;
+                        cell3.innerText = data[num].email;
+                        cell4.innerText = data[num].emailConfirmed;
+                        if (data[num].roles[0]) {
+                            cell5.innerText = data[num].roles[0];
+                        }
+                        if (data[num].roles[1]) {
+                            cell5.innerText = data[num].roles[0] + ", " + data[num].role[1];
+                        }
+                        if (data[num].roles[2]) {
+                            cell5.innerText = data[num].roles[0] + ", " + data[num].role[1] + ", " + data[num].roles[2];
+                        }
+                        cell6.innerHTML = '<button id="EditUserModalOpenButton' + num + '" style="cursor:pointer;">Edit</button>';
+                        num++;
+                    } else {
+                        x = 1
+                    }
+
+                };
+            });
+
+        
+    }
+</script>
+
+
+
+<h1>Manage Users</h1>
+
+<a class="btn btn-primary" style="color:white; cursor:pointer;" data-toggle="modal" data-target="#RegisterModal">
+    Create User
+</a>
+
+<table class="table" id="ManageUsersTable">
+    <thead>
+        <tr>
+            <th>
+                UserId
+            </th>
+            <th>
+                Username
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Email Confirmed
+            </th>
+            <th>
+                Roles
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<!--Manage Users Modal-->
+<div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="EditUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span class="text-danger" id="EditUserStatus"></span>
+                <div id="RegisterFormGroup">
+                    <div class="form-group">
+                        <label for="username">Username: </label>
+                        <input type="text" class="form-control" id="EditUsername" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email: </label>
+                        <input type="email" class="form-control" id="EditEmail" />
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Security Question 1: </label>
+                        <input type="text" class="form-control" id="EditSecQuestion1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Security Question 2: </label>
+                        <input type="text" class="form-control" id="EditSecQuestion2" />
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmpasssword">Password: </label>
+                        <br />
+                        <button class="btn btn-secondary">Click here to send link to reset password</button>
+                    </div>
+                </div>
+                <div class="d-none" id="RegisterEmailConfirmation">
+                    <h5>Thank you for registering. Before you can login, please confirm your email by clicking on the link that was sent to you via email</h5>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancelRegistration">Cancel</button>
+                <button type="button" class="btn btn-primary" id="RegisterSubmit">Register</button>
+                <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalCloseRegistration">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

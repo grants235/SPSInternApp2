@@ -56,6 +56,7 @@ namespace GbayApiWebApplicationV2.ApiControllers
                     var result = await userManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
+                        await userManager.AddToRoleAsync(user, "Buyers");
                         var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
                         var confirmationLink = Url.Action("ConfirmEmail", "Home",
                                                new { userId = user.Id, token = token }, Request.Scheme);
