@@ -12,11 +12,11 @@ The application was developed using ASP.NET Core 3. If you choose to run it outs
 
 ## Additional Setup
 Run the following the commands to set up the required user secrets:
-    1. run ```dotnet user-secrets set "EmailUsernameSecret" "<smtp username here>"```
-    1. run ```dotnet user-secrets set "EmailPasswordSecret" "<smtp password here"```
-    1. run ```dotnet user-secrets set "JwtKey" "a97d607c-2f75-459e-a070-e94fbdb12038"``` (generate your own GUID)
+1. run ```dotnet user-secrets set "EmailUsernameSecret" "<smtp username here>"```
+1. run ```dotnet user-secrets set "EmailPasswordSecret" "<smtp password here"```
+1. run ```dotnet user-secrets set "JwtKey" "a97d607c-2f75-459e-a070-e94fbdb12038"``` (generate your own GUID)
 
-    *******Email MUST be a gmail account**************
+    Email MUST be a gmail account
 
 ## Testing 
 
