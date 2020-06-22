@@ -23,7 +23,7 @@
                     //var newCell = newRow.insertCell(0);
                     //var newText = document.createTextNode(data[i].Username);
                     //newCell.appendChild(newText);
-                    if (data[num].id != null) {
+                    if (data[num]) {
                         var row = table.insertRow(0);
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
@@ -39,10 +39,10 @@
                             cell5.innerText = data[num].roles[0];
                         }
                         if (data[num].roles[1]) {
-                            cell5.innerText = data[num].roles[0] + ", " + data[num].role[1];
+                            cell5.innerText = data[num].roles[0] + ", " + data[num].roles[1];
                         }
                         if (data[num].roles[2]) {
-                            cell5.innerText = data[num].roles[0] + ", " + data[num].role[1] + ", " + data[num].roles[2];
+                            cell5.innerText = data[num].roles[0] + ", " + data[num].roles[1] + ", " + data[num].roles[2];
                         }
                         cell6.innerHTML = '<button id="EditUserModalOpenButton' + num + '" style="cursor:pointer;">Edit</button>';
                         num++;
@@ -91,51 +91,3 @@
     <tbody>
     </tbody>
 </table>
-
-<!--Manage Users Modal-->
-<div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="EditUserModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <span class="text-danger" id="EditUserStatus"></span>
-                <div id="RegisterFormGroup">
-                    <div class="form-group">
-                        <label for="username">Username: </label>
-                        <input type="text" class="form-control" id="EditUsername" />
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email: </label>
-                        <input type="email" class="form-control" id="EditEmail" />
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Security Question 1: </label>
-                        <input type="text" class="form-control" id="EditSecQuestion1" />
-                    </div>
-                    <div class="form-group">
-                        <label for="text">Security Question 2: </label>
-                        <input type="text" class="form-control" id="EditSecQuestion2" />
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmpasssword">Password: </label>
-                        <br />
-                        <button class="btn btn-secondary">Click here to send link to reset password</button>
-                    </div>
-                </div>
-                <div class="d-none" id="RegisterEmailConfirmation">
-                    <h5>Thank you for registering. Before you can login, please confirm your email by clicking on the link that was sent to you via email</h5>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancelRegistration">Cancel</button>
-                <button type="button" class="btn btn-primary" id="RegisterSubmit">Register</button>
-                <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalCloseRegistration">Close</button>
-            </div>
-        </div>
-    </div>
-</div>

@@ -135,10 +135,12 @@ document.getElementById('RegisterSubmit').addEventListener("click", e => {
     var email = document.getElementById('CreateEmail').value;
     var password = document.getElementById('CreatePassword').value;
     var confirmPassword = document.getElementById('CreateConfirmPassword').value;
+    var buyerCheck = document.getElementById('BuyerCheckbox').checked;
+    var sellerCheck = document.getElementById('SellerCheckbox').checked;
     if (password != confirmPassword) {
         document.getElementById('RegisterStatus').innerText = "Passwords do not match";
     } else {
-        var data = { 'username': username, 'email': email, 'password': password, 'confirmPassword': confirmPassword };
+        var data = { 'username': username, 'email': email, 'password': password, 'confirmPassword': confirmPassword, 'buyer': buyerCheck, 'seller': sellerCheck };
         var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
         fetch('/api/Register', requestInfo)
             .then(response => {
@@ -265,9 +267,4 @@ document.addEventListener("DOMContentLoaded", e => {
             });
     }
 
-});
-
-document.getElementById('EditUserModalOpenButton0').addEventListener("click", e => {
-    document.getElementById('EditUsername').nodeValue = "test";
-    $("EditUserModal").modal('show');
 });
