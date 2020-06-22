@@ -268,3 +268,276 @@ document.addEventListener("DOMContentLoaded", e => {
     }
 
 });
+
+document.getElementById('EditResetPasswordLink').addEventListener('click', e => {
+    var email = document.getElementById('EditEmail').value;
+    var data = { 'email': email };
+    var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+    fetch('/api/ForgotPassword', requestInfo)
+        .then(response => {
+            if (response.ok) {
+                document.getElementById('EditResetPasswordLink').innerText = "Suscessfully sent email!"
+            }
+        });
+});
+
+document.getElementById('EditSubmit').addEventListener('click', e => {
+    var id = document.getElementById('EditId').value;
+    var username = document.getElementById('EditUsername').value;
+    var email = document.getElementById('EditEmail').value;
+    var securityQuestion1 = document.getElementById('EditSecurityQuestion1').value;
+    var securityQuestion2 = document.getElementById('EditSecurityQuestion2').value;
+    var buyer = document.getElementById('EditBuyerCheckbox').checked;
+    var seller = document.getElementById('EditSellerCheckbox').checked;
+    var moderator = document.getElementById('EditModeratorCheckbox').checked;
+    var admin = document.getElementById('EditAdminCheckbox').checked;
+    var jwt = sessionStorage.getItem('jwt');
+    if (jwt != null && jwt != " ") {
+        var data = { 'id' : id, 'username': username, 'email': email, 'securityquestion1': securityQuestion1, 'securityQuestion2': securityQuestion2, 'buyer': buyer, 'seller': seller, 'moderator': moderator, 'administrator': admin }
+        var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+        fetch('/api/EditUser', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    $("#EditUserModal").modal('hide');
+                    document.location = '/Administration/ManageUsers'
+                } else {
+                    document.getElementById('EditStatus').innerText = "Error";
+                }
+            });
+    }
+});
+
+document.body.addEventListener('click', e => {
+    if (e.srcElement.id == 'EditUserModalOpenButton0') {
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/ManageUsers', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('EditUsername').value = data[0].username;
+                    document.getElementById('EditEmail').value = data[0].email;
+                    document.getElementById('EditSecurityQuestion1').value = data[0].securityQuestion1;
+                    document.getElementById('EditSecurityQuestion2').value = data[0].securityQuestion2;
+                    document.getElementById('EditId').value = data[1].id;
+                    if (data[0].roles.includes("Buyers")) {
+                        document.getElementById('EditBuyerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[0].roles.includes("Sellers")) {
+                        document.getElementById('EditSellerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[0].roles.includes("Moderators")) {
+                        document.getElementById('EditModeratorCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditModeratorCheckbox').checked = false;
+                    }
+                    if (data[0].roles.includes("Administrators")) {
+                        document.getElementById('EditAdminCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditAdminCheckbox').checked = false;
+                    }
+                    $("#EditUserModal").modal('show');
+                });
+        }
+    }
+});
+
+document.body.addEventListener('click', e => {
+    if (e.srcElement.id == 'EditUserModalOpenButton1') {
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/ManageUsers', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('EditUsername').value = data[1].username;
+                    document.getElementById('EditEmail').value = data[1].email;
+                    document.getElementById('EditSecurityQuestion1').value = data[1].securityQuestion1;
+                    document.getElementById('EditSecurityQuestion2').value = data[1].securityQuestion2;
+                    document.getElementById('EditId').value = data[1].id;
+                    if (data[1].roles.includes("Buyers")) {
+                        document.getElementById('EditBuyerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[1].roles.includes("Sellers")) {
+                        document.getElementById('EditSellerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[1].roles.includes("Moderators")) {
+                        document.getElementById('EditModeratorCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditModeratorCheckbox').checked = false;
+                    }
+                    if (data[1].roles.includes("Administrators")) {
+                        document.getElementById('EditAdminCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditAdminCheckbox').checked = false;
+                    }
+                    $("#EditUserModal").modal('show');
+                });
+        }
+    }
+});
+
+document.body.addEventListener('click', e => {
+    if (e.srcElement.id == 'EditUserModalOpenButton2') {
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/ManageUsers', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('EditUsername').value = data[2].username;
+                    document.getElementById('EditEmail').value = data[2].email;
+                    document.getElementById('EditSecurityQuestion1').value = data[2].securityQuestion1;
+                    document.getElementById('EditSecurityQuestion2').value = data[2].securityQuestion2;
+                    document.getElementById('EditId').value = data[2].id;
+                    if (data[2].roles.includes("Buyers")) {
+                        document.getElementById('EditBuyerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[2].roles.includes("Sellers")) {
+                        document.getElementById('EditSellerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[2].roles.includes("Moderators")) {
+                        document.getElementById('EditModeratorCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditModeratorCheckbox').checked = false;
+                    }
+                    if (data[2].roles.includes("Administrators")) {
+                        document.getElementById('EditAdminCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditAdminCheckbox').checked = false;
+                    }
+                    $("#EditUserModal").modal('show');
+                });
+        }
+    }
+});
+
+document.body.addEventListener('click', e => {
+    if (e.srcElement.id == 'EditUserModalOpenButton3') {
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/ManageUsers', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('EditUsername').value = data[3].username;
+                    document.getElementById('EditEmail').value = data[3].email;
+                    document.getElementById('EditSecurityQuestion1').value = data[3].securityQuestion1;
+                    document.getElementById('EditSecurityQuestion2').value = data[3].securityQuestion2;
+                    document.getElementById('EditId').value = data[3].id;
+                    if (data[3].roles.includes("Buyers")) {
+                        document.getElementById('EditBuyerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[3].roles.includes("Sellers")) {
+                        document.getElementById('EditSellerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[3].roles.includes("Moderators")) {
+                        document.getElementById('EditModeratorCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditModeratorCheckbox').checked = false;
+                    }
+                    if (data[3].roles.includes("Administrators")) {
+                        document.getElementById('EditAdminCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditAdminCheckbox').checked = false;
+                    }
+                    $("#EditUserModal").modal('show');
+                });
+        }
+    }
+});
+
+document.body.addEventListener('click', e => {
+    if (e.srcElement.id == 'EditUserModalOpenButton4') {
+        var jwt = sessionStorage.getItem('jwt');
+        if (jwt != null && jwt != " ") {
+            var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+            fetch('/api/ManageUsers', requestInfo)
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    document.getElementById('EditUsername').value = data[4].username;
+                    document.getElementById('EditEmail').value = data[4].email;
+                    document.getElementById('EditSecurityQuestion1').value = data[4].securityQuestion1;
+                    document.getElementById('EditSecurityQuestion2').value = data[4].securityQuestion2;
+                    document.getElementById('EditId').value = data[4].id;
+                    if (data[4].roles.includes("Buyers")) {
+                        document.getElementById('EditBuyerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[4].roles.includes("Sellers")) {
+                        document.getElementById('EditSellerCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditSellerCheckbox').checked = false;
+                    }
+                    if (data[4].roles.includes("Moderators")) {
+                        document.getElementById('EditModeratorCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditModeratorCheckbox').checked = false;
+                    }
+                    if (data[4].roles.includes("Administrators")) {
+                        document.getElementById('EditAdminCheckbox').checked = true;
+                    }
+                    else {
+                        document.getElementById('EditAdminCheckbox').checked = false;
+                    }
+                    $("#EditUserModal").modal('show');
+                });
+        }
+    }
+});

@@ -53,7 +53,9 @@ namespace GbayApiWebApplicationV2.ApiControllers
                     Username = user.UserName,
                     Email = user.Email,
                     EmailConfirmed = user.EmailConfirmed,
-                    Roles = await userManager.GetRolesAsync(user)
+                    Roles = await userManager.GetRolesAsync(user),
+                    SecurityQuestion1 = user.SecurityQuestion1,
+                    SecurityQuestion2 = user.SecurityQuestion2
                 };
                 modelList.Add(vm);
             }

@@ -44,7 +44,7 @@
                         if (data[num].roles[2]) {
                             cell5.innerText = data[num].roles[0] + ", " + data[num].roles[1] + ", " + data[num].roles[2];
                         }
-                        cell6.innerHTML = '<button id="EditUserModalOpenButton' + num + '" style="cursor:pointer;">Edit</button>';
+                        cell6.innerHTML = '<button class="btn btn-primary" id="EditUserModalOpenButton' + num + '" style="cursor:pointer;">Edit</button>';
                         num++;
                     } else {
                         x = 1
@@ -53,13 +53,14 @@
                 };
             });
 
-        
+
     }
 </script>
 
 
 
 <h1>Manage Users</h1>
+<h4>***The edit user button only works with the first 5 users because I am a lazy programmer :) ***</h4>
 
 <a class="btn btn-primary" style="color:white; cursor:pointer;" data-toggle="modal" data-target="#RegisterModal">
     Create User
@@ -75,7 +76,7 @@
                 Username
             </th>
             <th>
-                Email
+                Email Address
             </th>
             <th>
                 Email Confirmed
@@ -91,3 +92,64 @@
     <tbody>
     </tbody>
 </table>
+
+<!--Edit User Modal-->
+<div class="modal fade" id="EditUserModal" tabindex="-1" role="dialog" aria-labelledby="EditUserModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span class="text-danger" id="EditStatus"></span>
+                <div id="RegisterFormGroup">
+                    <input id="EditId" hidden />
+                    <div class="form-group">
+                        <label for="username">Username: </label>
+                        <input type="text" class="form-control" placeholder="Enter your Username" id="EditUsername" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email: </label>
+                        <input type="email" class="form-control" placeholder="Enter your Email" id="EditEmail" />
+                    </div>
+                    <div class="form-group">
+                        <label for="securityQuestion">Security Question 1: </label>
+                        <input type="text" class="form-control" id="EditSecurityQuestion1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="securityQuestion">Security Question 2: </label>
+                        <input type="text" class="form-control" id="EditSecurityQuestion2" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password: </label>
+                        <br />
+                        <button id="EditResetPasswordLink" class="btn btn-dark">Send Reset Password Link</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Roles</label>
+                        <br />
+                        <input id="EditBuyerCheckbox" type="checkbox" />
+                        <label>Buyer</label>
+                        <br />
+                        <input id="EditSellerCheckbox" type="checkbox" />
+                        <label>Seller</label>
+                        <br />
+                        <input id="EditModeratorCheckbox" type="checkbox" />
+                        <label>Moderator</label>
+                        <br />
+                        <input id="EditAdminCheckbox" type="checkbox" />
+                        <label>Admin</label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancelEdit">Cancel</button>
+                <button type="button" class="btn btn-primary" id="EditSubmit">Update</button>
+                <button type="button" class="btn btn-secondary d-none" data-dismiss="modal" id="modalCloseEdit">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
