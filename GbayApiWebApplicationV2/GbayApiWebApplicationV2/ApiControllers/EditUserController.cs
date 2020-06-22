@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GbayApiWebApplicationV2.ApiControllers
 {
-    [Authorize]
+    [Authorize(Roles = "Administrators")]
     [Route("api/[controller]")]
     public class EditUserController : Controller
     {
