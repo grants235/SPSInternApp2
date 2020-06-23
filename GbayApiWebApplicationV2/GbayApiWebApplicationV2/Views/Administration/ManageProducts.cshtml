@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Manage Products";
+}
+
+<script>
+    var jwt = sessionStorage.getItem('jwt');
+    if (jwt != null && jwt != " ") {
+        var requestInfo = { 'method': 'GET', headers: { 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+        fetch('/api/ManageProducts', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    return response.json;
+                }
+            })
+            .then(data => {
+
+            });
+    };
+</script>
+
+<h1>Manage Products</h1>

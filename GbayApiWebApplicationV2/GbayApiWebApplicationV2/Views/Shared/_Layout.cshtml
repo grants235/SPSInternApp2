@@ -25,6 +25,9 @@
                     if (data.role == "Administrators") {
                         document.getElementById('ManageUsersLink').classList.remove('d-none');
                     }
+                    if (data.role == "Sellers") {
+                        document.getElementById('ManageProductsLink').classList.remove('d-none');
+                    }
                 });
         }
     </script>
@@ -75,6 +78,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark d-none" asp-controller="Administration" asp-action="ManageUsers" id="ManageUsersLink">Manage Users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark d-none" asp-controller="Administration" asp-action="ManageProducts" id="ManageProductsLink">Manage Products</a>
                         </li>
                     </ul>
                 </div>
