@@ -269,17 +269,6 @@ document.addEventListener("DOMContentLoaded", e => {
 
 });
 
-document.getElementById('EditResetPasswordLink').addEventListener('click', e => {
-    var email = document.getElementById('EditEmail').value;
-    var data = { 'email': email };
-    var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
-    fetch('/api/ForgotPassword', requestInfo)
-        .then(response => {
-            if (response.ok) {
-                document.getElementById('EditResetPasswordLink').innerText = "Suscessfully sent email!"
-            }
-        });
-});
 
 document.getElementById('EditSubmit').addEventListener('click', e => {
     var id = document.getElementById('EditId').value;

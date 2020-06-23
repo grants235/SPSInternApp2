@@ -9,13 +9,91 @@
         fetch('/api/ManageProducts', requestInfo)
             .then(response => {
                 if (response.ok) {
-                    return response.json;
+                    return response.json();
                 }
             })
             .then(data => {
+                for (var i = 0; i < data.products.length; i++) {
+                    var body = document.body;
 
+                    var card = document.createElement('div');
+                    card.classList.add('card');
+                    card.classList.add('product-card');
+
+                    var image = document.createElement('img');
+                    image.src = data.products[i].imgUrl;
+                    image.classList.add('card-img-top');
+                    card.appendChild(image);
+
+                    var cardBody = document.createElement('div');
+                    cardBody.classList.add('card-body');
+                    card.appendChild(cardBody);
+
+                    var cardTitle = document.createElement('h4');
+                    cardTitle.classList.add('card-title');
+                    cardTitle.innerText = data.products[i].productName;
+                    cardBody.appendChild(cardTitle);
+
+                    var price = document.createElement('h5');
+                    price.innerText = "$" + data.products[i].price;
+                    cardBody.appendChild(price);
+
+                    var editProductButton = document.createElement('button');
+                    editProductButton.classList.add('btn');
+                    editProductButton.classList.add('btn-primary');
+                    editProductButton.classList.add('edit-product-btn');
+                    editProductButton.id = 'EditProductModal' + i;
+                    editProductButton.innerText = "Edit Product";
+                    cardBody.appendChild(editProductButton);
+
+                    var publishedBy = document.createElement('p');
+                    publishedBy.innerText = "Published by: " + data.products[i].seller;
+                    cardBody.appendChild(publishedBy);
+
+                    body.appendChild(card);
+                }
             });
     };
 </script>
 
 <h1>Manage Products</h1>
+<h5>*** You can only edit the first 5 products because I am a lazy programmer :) ***</h5>
+
+<!--Edit Products Modal-->
+<div class="modal fade" id="EditProductModal" tabindex="-1" role="dialog" aria-labelledby="EditProductModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Product Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="productName">Name:</label>
+                    <input class="form-control" id="EditProductName"/>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description:</label>
+                    <input class="form-control" id="EditProductDescription"/>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price:</label>
+                    <input class="form-control" id="EditProductPrice"/>
+                </div>
+                <div class="form-group">
+                    <label for="productImgUrl">Image URL:</label>
+                    <input class="form-control" id="EditProductImageUrl"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                <button type="button" class="btn btn-primary" id="AddToCart">Update</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/EditProduct.js"></script>

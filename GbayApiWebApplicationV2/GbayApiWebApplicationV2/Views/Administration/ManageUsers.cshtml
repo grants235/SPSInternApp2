@@ -60,7 +60,19 @@
     }
 </script>
 
-
+<script>
+    document.getElementById('EditResetPasswordLink').addEventListener('click', e => {
+        var email = document.getElementById('EditEmail').value;
+        var data = { 'email': email };
+        var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
+        fetch('/api/ForgotPassword', requestInfo)
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('EditResetPasswordLink').innerText = "Suscessfully sent email!"
+                }
+            });
+    });
+</script>
 
 <h1>Manage Users</h1>
 <h4>***The edit user button only works with the first 5 users because I am a lazy programmer :) ***</h4>
@@ -156,3 +168,4 @@
         </div>
     </div>
 </div>
+
