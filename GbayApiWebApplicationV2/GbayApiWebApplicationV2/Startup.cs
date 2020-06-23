@@ -132,6 +132,39 @@ namespace GbayApiWebApplicationV2
                 EmailConfirmed = true
             };
             await userManager.CreateAsync(partial, "P@ssword1");
+
+            ApplicationUser buyerUser = new ApplicationUser()
+            {
+                UserName = "Buyer",
+                Email = "buyer@buyer.com",
+                SecurityQuestion1 = "b",
+                SecurityQuestion2 = "b",
+                EmailConfirmed = true,
+            };
+            await userManager.CreateAsync(buyerUser, "P@ssword1");
+            await userManager.AddToRoleAsync(buyerUser, buyerRole.Name);
+
+            ApplicationUser sellerUser = new ApplicationUser()
+            {
+                UserName = "Seller",
+                Email = "seller@seller.com",
+                SecurityQuestion1 = "s",
+                SecurityQuestion2 = "s",
+                EmailConfirmed = true,
+            };
+            await userManager.CreateAsync(sellerUser, "P@ssword1");
+            await userManager.AddToRoleAsync(sellerUser, sellerRole.Name);
+
+            ApplicationUser moderatorUser = new ApplicationUser()
+            {
+                UserName = "Moderator",
+                Email = "moderator@moderator.com",
+                SecurityQuestion1 = "m",
+                SecurityQuestion2 = "m",
+                EmailConfirmed = true,
+            };
+            await userManager.CreateAsync(moderatorUser, "P@ssword1");
+            await userManager.AddToRoleAsync(moderatorUser, moderatorRole.Name);
         }
     }
 }
