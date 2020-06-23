@@ -125,14 +125,6 @@ namespace GbayApiWebApplicationV2
             await userManager.CreateAsync(admin, "P@ssword1");
             await userManager.AddToRoleAsync(admin, "Administrators");
 
-            ApplicationUser partial = new ApplicationUser
-            {
-                UserName = "Grants235",
-                Email = "grantshanklin@gmail.com",
-                EmailConfirmed = true
-            };
-            await userManager.CreateAsync(partial, "P@ssword1");
-
             ApplicationUser buyerUser = new ApplicationUser()
             {
                 UserName = "Buyer",
