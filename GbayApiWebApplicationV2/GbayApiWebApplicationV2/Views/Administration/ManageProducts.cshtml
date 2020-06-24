@@ -69,27 +69,30 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            
             <div class="modal-body">
+                <span id="EditProductStatus" class="text-danger"></span>
+                <input hidden id="EditProductId" name="id" />
                 <div class="form-group">
                     <label for="productName">Name:</label>
-                    <input class="form-control" id="EditProductName"/>
+                    <input class="form-control" name="productName" id="EditProductName" />
                 </div>
                 <div class="form-group">
                     <label for="productDescription">Description:</label>
-                    <input class="form-control" id="EditProductDescription"/>
+                    <input class="form-control" name="productDescription" id="EditProductDescription" />
                 </div>
                 <div class="form-group">
                     <label for="productPrice">Price:</label>
-                    <input class="form-control" id="EditProductPrice"/>
+                    <input class="form-control" name="productPrice" id="EditProductPrice" />
                 </div>
                 <div class="form-group">
                     <label for="productImgUrl">Image URL:</label>
-                    <input class="form-control" id="EditProductImageUrl"/>
+                    <input class="form-control" name="productImgUrl" id="EditProductImageUrl" />
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
-                <button type="button" class="btn btn-primary" id="AddToCart">Update</button>
+                <button type="button" class="btn btn-primary" id="EditProductSubmit">Update</button>
 
             </div>
         </div>
