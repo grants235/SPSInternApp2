@@ -58,6 +58,9 @@
 
 <h1>Manage Products</h1>
 <h5>*** You can only edit the first 5 products because I am a lazy programmer :) ***</h5>
+<button class="btn btn-primary" id="CreateProductButton" data-toggle="modal" data-target="#CreateProductModal">
+    Create Product
+</button>
 
 <!--Edit Products Modal-->
 <div class="modal fade" id="EditProductModal" tabindex="-1" role="dialog" aria-labelledby="EditProductModal" aria-hidden="true">
@@ -69,7 +72,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            
+
             <div class="modal-body">
                 <span id="EditProductStatus" class="text-danger"></span>
                 <input hidden id="EditProductId" name="id" />
@@ -99,4 +102,45 @@
     </div>
 </div>
 
+<!--Create Product Modal-->
+<div class="modal fade" id="CreateProductModal" tabindex="-1" role="dialog" aria-labelledby="CreateProductModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <span id="CreateProductStatus" class="text-danger"></span>
+                <div class="form-group">
+                    <label for="productName">Name:</label>
+                    <input class="form-control" name="productName" id="CreateProductName" />
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description:</label>
+                    <input class="form-control" name="productDescription" id="CreateProductDescription" />
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Price:</label>
+                    <input class="form-control" name="productPrice" id="CreateProductPrice" />
+                </div>
+                <div class="form-group">
+                    <label for="productImgUrl">Image URL:</label>
+                    <input class="form-control" name="productImgUrl" id="CreateProductImageUrl" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Close</button>
+                <button type="button" class="btn btn-primary" id="CreateProductSubmit">Create</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="~/js/EditProduct.js"></script>
+<script src="~/js/CreateProduct.js"></script>
