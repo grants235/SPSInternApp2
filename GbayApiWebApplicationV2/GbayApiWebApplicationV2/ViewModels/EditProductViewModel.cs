@@ -9,10 +9,10 @@ namespace GbayApiWebApplicationV2.ViewModels
 {
     public class EditProductViewModel
     {
-        public string id { get; set; }
-        public string productName { get; set; }
-        public string productDescription { get; set; }
-        public decimal productPrice { get; set; }
-        public string productImgUrl { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string ImgUrl { get; set; }
     }
 }

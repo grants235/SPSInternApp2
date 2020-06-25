@@ -28,21 +28,22 @@ namespace GbayApiWebApplicationV2.ApiControllers
 
         // POST api/<controller>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]EditProductViewModel model)
+        public async Task<ActionResult> Post([FromHeader]int Id, [FromHeader]string ProductName, [FromHeader]string ProductDescription, [FromHeader]decimal ProductPrice, [FromHeader]string ProductImgUrl)
         {
             ApplicationUser user = await userManager.FindByIdAsync(User.Identity.Name);
             if (user != null)
             {
-                Product product = await context.Products.FindAsync(model.id);
+                Product product = await context.Products.FindAsync(Id);
                 if (product != null)
                 {
                     if (product.Seller == user.UserName)
                     {
-                        product.ProductName = model.productName;
-                        product.Description = model.productDescription;
-                        product.Price = model.productPrice;
-                        product.ImgUrl = model.productImgUrl;
+                        product.ProductName = ProductName;
+                        product.Description = ProductDescription;
+                        product.Price = ProductPrice;
+                        product.ImgUrl = ProductImgUrl;
                         context.Products.Update(product);
+                        await context.SaveChangesAsync();
                         return new OkResult();
                     }
                 }

@@ -30,8 +30,7 @@ document.getElementById('EditProductSubmit').addEventListener('click', e => {
         var productDescription = document.getElementById('EditProductDescription').value;
         var productPrice = document.getElementById('EditProductPrice').value;
         var productImgUrl = document.getElementById('EditProductImageUrl').value;
-        var data = { 'id': id, 'productName': productName, 'productDescription': productDescription, 'productPrice': productPrice, 'productImgUrl': productImgUrl };
-        var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + jwt }, credentials: 'same-origin' };
+        var requestInfo = { 'method': 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'bearer ' + jwt, 'id': id, 'ProductName': productName, 'ProductDescription': productDescription, 'ProductPrice': productPrice, 'ProductImgUrl': productImgUrl }, credentials: 'same-origin' };
         fetch('/api/EditProduct', requestInfo)
             .then(response => {
                 if (response.ok) {
