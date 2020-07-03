@@ -227,10 +227,12 @@ document.getElementById('ForgotPasswordSubmit').addEventListener("click", e => {
 });
 
 document.getElementById('ResetPasswordSubmit').addEventListener("click", e => {
-    var userId = document.getElementById('userId').value;
-    var token = document.getElementById('token').value;
-    var password = document.getElementById('Password').value;
-    var confirmPassword = document.getElementById('ConfirmPassword').value;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    var userId = urlParams.get('UserId');
+    var token = urlParams.get('Token');
+    var password = document.getElementById('ResetPasswordNew').value;
+    var confirmPassword = document.getElementById('ResetConfirmPasswordNew').value;
     if (password == confirmPassword) {
         var data = { 'userId': userId, 'token': token, 'password': password, 'confirmPassword': confirmPassword };
         var requestInfo = { 'method': 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json' }, credentials: 'same-origin' };
