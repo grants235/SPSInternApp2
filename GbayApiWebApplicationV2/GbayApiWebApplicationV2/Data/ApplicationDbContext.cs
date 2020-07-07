@@ -64,7 +64,7 @@ namespace GbayApiWebApplicationV2.Data
                         Description = "This is a great test product to test ths web application",
                         Price = 100.00m,
                         Seller = "Grant",
-                        ImgUrl = "https://pfwo.com/image/cache/catalog/porto/index18/tstprod-500x500.jpg"
+                        ImgUrl = "https://s3.amazonaws.com/creare-websites-wpms-legacy/wp-content/uploads/sites/32/2016/03/01200959/canstockphoto22402523-arcos-creator.com_-1024x1024.jpg"
                     });
                 context.SaveChanges();
 

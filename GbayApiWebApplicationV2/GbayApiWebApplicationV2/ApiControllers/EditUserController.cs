@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GbayApiWebApplicationV2.ApiControllers
 {
-    [Authorize(Roles = "Administrators")]
+
     [Route("api/[controller]")]
     public class EditUserController : Controller
     {
@@ -27,54 +27,60 @@ namespace GbayApiWebApplicationV2.ApiControllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]EditUserViewModel model)
         {
-            ApplicationUser user = await userManager.FindByIdAsync(model.Id);
-            if (user != null)
+            ApplicationUser CurrentUser = await userManager.FindByIdAsync(User.Identity.Name);
+            var roles = await userManager.GetRolesAsync(CurrentUser);
+            if (roles.Contains("Administrators"))
             {
-                user.UserName = model.Username;
-                user.Email = model.Email;
-                user.SecurityQuestion1 = model.SecurityQuestion1;
-                user.SecurityQuestion2 = model.SecurityQuestion2;
-                if (model.Buyer == true)
+                ApplicationUser user = await userManager.FindByIdAsync(model.Id);
+                if (user != null)
                 {
-                    await userManager.AddToRoleAsync(user, "Buyers");
-                }
-                else
-                {
-                    await userManager.RemoveFromRoleAsync(user, "Buyers");
+                    user.UserName = model.Username;
+                    user.Email = model.Email;
+                    user.SecurityQuestion1 = model.SecurityQuestion1;
+                    user.SecurityQuestion2 = model.SecurityQuestion2;
+                    if (model.Buyer == true)
+                    {
+                        await userManager.AddToRoleAsync(user, "Buyers");
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user, "Buyers");
+                    }
+
+                    if (model.Seller == true)
+                    {
+                        await userManager.AddToRoleAsync(user, "Sellers");
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user, "Sellers");
+                    }
+
+                    if (model.Moderator == true)
+                    {
+                        await userManager.AddToRoleAsync(user, "Moderators");
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user, "Moderators");
+                    }
+
+                    if (model.Administrator == true)
+                    {
+                        await userManager.AddToRoleAsync(user, "Administrators");
+                    }
+                    else
+                    {
+                        await userManager.RemoveFromRoleAsync(user, "Administrators");
+                    }
+
+                    var result = await userManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return new OkResult();
+                    }
                 }
 
-                if (model.Seller == true)
-                {
-                    await userManager.AddToRoleAsync(user, "Sellers");
-                }
-                else
-                {
-                    await userManager.RemoveFromRoleAsync(user, "Sellers");
-                }
-
-                if (model.Moderator == true)
-                {
-                    await userManager.AddToRoleAsync(user, "Moderators");
-                }
-                else
-                {
-                    await userManager.RemoveFromRoleAsync(user, "Moderators");
-                }
-
-                if (model.Administrator == true)
-                {
-                    await userManager.AddToRoleAsync(user, "Administrators");
-                }
-                else
-                {
-                    await userManager.RemoveFromRoleAsync(user, "Administrators");
-                }
-
-                var result = await userManager.UpdateAsync(user);
-                if (result.Succeeded)
-                {
-                    return new OkResult();
-                }
             }
             return new UnauthorizedResult();
         }
