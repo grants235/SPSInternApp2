@@ -1,5 +1,7 @@
 # Gbay Online Marketplace
 
+![Image for Application](https://github.com/grants235/SPSInternApp2/blob/master/ApplicationScreenshot.PNG)
+
 Gbay is an ecommerce website, similar to Ebay. You can go on and register as a buyer and shop others products or you can register as a seller and post products for others to buy. There are also moderators that can edit and delete all products if they are scams or are not the kind of products that we want. They can see the users data but some of it is masked and they cannot edit it. To have a moderator account you need an email invitation that administrators can send from their dashboard. Administrators can do everything that a moderator as well as being able to see and edit all users info, unmasked. 
 
 ## Purpose
